@@ -3,21 +3,21 @@ from typing import List, Optional
 
 class Player(BaseModel):
     account_id: Optional[int] = None
-    personaname: str
-    rank_tier: str
-    avatar_url: str
-    kills: int
-    deaths: int
-    assists: int
-    last_hits: int
-    denies: int
-    gold_per_min: int
-    xp_per_min: int
-    net_worth: int
-    total_gold: int
-    level: int
-    wins: int
-    loses: int
+    personaname: str = "Anonymous"
+    rank_tier: int
+    avatar_url: Optional[str] = None
+    kills: Optional[int] = None
+    deaths: Optional[int] = None
+    assists: Optional[int] = None
+    last_hits: Optional[int] = None
+    denies: Optional[int] = None
+    gold_per_min: Optional[int] = None
+    xp_per_min: Optional[int] = None
+    net_worth: Optional[int] = None
+    total_gold: Optional[int] = None
+    level: Optional[int] = None
+    wins: Optional[int] = 0
+    loses: Optional[int] = 0
     win_rate: Optional[float] = None
 
     @field_validator("win_rate", mode="before")
@@ -27,15 +27,13 @@ class Player(BaseModel):
         loses = data.get("loses", 0)
         total = wins + loses
 
+        if total == 0:
+            win_rate = 0
+            return win_rate
+
         win_rate = wins / total
 
         return round(win_rate, 2)
-    
-    @field_validator("personaname", mode="before")
-    def personaname_validate(cls, v, info):
-        data = info.data
-        if data.get("account_id") == None:
-            return "Anonymous"
 
 class Match(BaseModel):
     players: List[Player]
