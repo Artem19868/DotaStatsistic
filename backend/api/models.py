@@ -55,12 +55,11 @@ class Ability(BaseModel):
     id: int
     name: str
     image_url: str
-    display_name: str
+    #display_name: str
 
 class Hero(BaseModel):
     id: int
     name: str
     image_url: str
     display_name: str
-    abilities: List[Ability]
-
+    abilities: Optional[List[Ability]] = None
