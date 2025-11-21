@@ -5,7 +5,8 @@ import json
 from abilities import AbilityManager
 
 class HeroManager:
-    def __init__(self):
+    def __init__(self, hero_id: int):
+        self.hero_id = hero_id
         self.heroes_data = self._load_heroes()
         self.heroes_by_id = {}
         self._create_id_mapping()
@@ -23,17 +24,12 @@ class HeroManager:
         image_url = f"https://cdn.dota2.com/apps/dota2/images/heroes/{hero_name.replace('npc_dota_hero_', '')}_full.png"
         return image_url
 
-    def get_hero_model(self, hero_id: int):
-        hero = self.heroes_by_id.get(hero_id)
-        hero_model = Hero(id=hero_id,
+    def get_hero_model(self):
+        hero = self.heroes_by_id.get(self.hero_id)
+        hero_model = Hero(id=self.hero_id,
                           name=hero["name"],
                           image_url=self._load_hero_photo(hero["name"]),
                           display_name=hero["localized_name"],
                           abilities= AbilityManager(hero["name"]).get_abilities_models()
                           )
-        print(hero_model)
         return hero_model
-
-hero = HeroManager()
-
-hero.get_hero_model(42)

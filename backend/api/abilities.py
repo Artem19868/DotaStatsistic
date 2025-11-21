@@ -46,6 +46,4 @@ class AbilityManager:
                 image_url= self._load_hero_ability_photo(ability)
             )
             abilities_models.append(ability)
-        
-        print(abilities_models)
         return abilities_models

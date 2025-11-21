@@ -1,11 +1,31 @@
 from pydantic import BaseModel, field_validator
 from typing import List, Optional
 
+class Item(BaseModel):
+    id: Optional[int] = None
+    price: Optional[int] = None
+    image_url: Optional[str] = None
+    display_name: Optional[str] = None
+
+class Ability(BaseModel):
+    id: int
+    name: str
+    image_url: str
+    #display_name: str
+
+class Hero(BaseModel):
+    id: int
+    name: str
+    image_url: str
+    display_name: str
+    abilities: Optional[List[Ability]] = None
+
 class Player(BaseModel):
     account_id: Optional[int] = None
     personaname: str = "Anonymous"
     rank_tier: int
     avatar_url: Optional[str] = None
+    hero: Optional[Hero] = None
     kills: Optional[int] = None
     deaths: Optional[int] = None
     assists: Optional[int] = None
@@ -19,6 +39,17 @@ class Player(BaseModel):
     wins: Optional[int] = 0
     loses: Optional[int] = 0
     win_rate: Optional[float] = None
+    item_0: Optional[Item] = None
+    item_1: Optional[Item] = None
+    item_2: Optional[Item] = None
+    item_3: Optional[Item] = None
+    item_4: Optional[Item] = None
+    item_5: Optional[Item] = None
+    backpack_0: Optional[Item] = None
+    backpack_1: Optional[Item] = None
+    backpack_2: Optional[Item] = None
+    item_neutral: Optional[Item] = None
+    item_neutral2: Optional[Item] = None
 
     @field_validator("win_rate", mode="before")
     def win_rate_validate(cls, v, info):
@@ -34,7 +65,7 @@ class Player(BaseModel):
         win_rate = wins / total
 
         return round(win_rate, 2)
-
+    
 class Match(BaseModel):
     players: List[Player]
     radiant_win: bool
@@ -44,22 +75,3 @@ class Match(BaseModel):
     radiant_score: int
     dire_score: int
     leagueid: int
-
-class Items(BaseModel):
-    id: int
-    name: str
-    image_url: str
-    display_name: str
-
-class Ability(BaseModel):
-    id: int
-    name: str
-    image_url: str
-    #display_name: str
-
-class Hero(BaseModel):
-    id: int
-    name: str
-    image_url: str
-    display_name: str
-    abilities: Optional[List[Ability]] = None
