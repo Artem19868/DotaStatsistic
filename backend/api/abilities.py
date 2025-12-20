@@ -36,14 +36,17 @@ class AbilityManager:
         return image_url
 
     def get_abilities_models(self):
-        abilities_models = []
+        abilities_models = {}
         hero_data = self.heroes_abilities_data.get(self.hero_name)
         abilities_list = hero_data.get("abilities")
         for ability in abilities_list:
+            if ability == 'generic_hidden':
+                continue
+
             ability = Ability(
                 id= self.heroes_abilities_by_name.get(ability),
                 name= ability,
                 image_url= self._load_hero_ability_photo(ability)
             )
-            abilities_models.append(ability)
+            abilities_models[ability.id]= ability
         return abilities_models

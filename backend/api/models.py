@@ -1,5 +1,5 @@
 from pydantic import BaseModel, field_validator
-from typing import List, Optional
+from typing import List, Optional,Dict
 
 class Item(BaseModel):
     id: Optional[int] = None
@@ -18,13 +18,14 @@ class Hero(BaseModel):
     name: str
     image_url: str
     display_name: str
-    abilities: Optional[List[Ability]] = None
+    abilities: Optional[Dict[int, Ability]] = None
 
 class Player(BaseModel):
-    account_id: Optional[int] = None
-    personaname: str = "Anonymous"
-    rank_tier: int
+    steam_32_id: Optional[int] = None
+    user_name: str = "Anonymous"
     avatar_url: Optional[str] = None
+    win_rate: Optional[float] = None
+    rank_tier: int
     hero: Optional[Hero] = None
     kills: Optional[int] = None
     deaths: Optional[int] = None
@@ -38,7 +39,6 @@ class Player(BaseModel):
     level: Optional[int] = None
     wins: Optional[int] = 0
     loses: Optional[int] = 0
-    win_rate: Optional[float] = None
     item_0: Optional[Item] = None
     item_1: Optional[Item] = None
     item_2: Optional[Item] = None

@@ -8,7 +8,7 @@ def get_api_request(url):
     data = response.json()
     return data
 
-def get_player_data(account_id):
+def get_player_data_api(account_id):
     url = f"https://api.opendota.com/api/players/{account_id}"
     win_lose_url = f"https://api.opendota.com/api/players/{account_id}/wl"
 
@@ -34,7 +34,7 @@ def get_player_data(account_id):
     )
     return(player)
 
-def get_match_data(match_id):
+def get_match_data_api(match_id):
     url = f"https://api.opendota.com/api/matches/{match_id}"
 
     match_data = get_api_request(url)

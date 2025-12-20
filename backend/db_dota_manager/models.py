@@ -24,6 +24,8 @@ class Hero(models.Model):
 
     hero_id = models.IntegerField(primary_key=True, verbose_name='Hero id')
     name = models.CharField(max_length=200, verbose_name='Hero name')
+    display_name = models.CharField(max_length=200, verbose_name='Display hero name')
+    image_url = models.URLField(verbose_name='Hero image url')
 
     def __str__(self):
         return self.name
@@ -36,9 +38,10 @@ class HeroAbility(models.Model):
     objects = models.Manager()
 
     hero_id = models.ForeignKey(Hero,on_delete=models.CASCADE,verbose_name='Hero id', related_name='abilities')
-    ability_id = models.IntegerField(primary_key=True,verbose_name='Ability id')
 
+    ability_id = models.IntegerField(primary_key=True,verbose_name='Ability id')
     name = models.CharField(max_length=200, verbose_name='Ability name')
+    image_url = models.URLField(verbose_name='Ability image url')
 
     def __str__(self):
         return self.name
@@ -51,7 +54,9 @@ class Item(models.Model):
     objects = models.Manager()
 
     item_id = models.IntegerField(primary_key=True, verbose_name='Item id')
-    name = models.CharField(max_length=200, verbose_name='Item name')
+    price = models.IntegerField(verbose_name='Item price')
+    image_url = models.URLField(verbose_name='Item image url')
+    display_name= models.CharField(max_length=200, verbose_name='Display item name')
 
     def __str__(self):
         return self.name
