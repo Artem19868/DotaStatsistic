@@ -13,7 +13,7 @@ class Player(models.Model):
     rank_tier = models.IntegerField(verbose_name='Rank tier')
 
     def __str__(self):
-        return self.steam_32_id
+        return str(self.steam_32_id)
     
     class Meta:
         verbose_name = 'Player'
@@ -98,17 +98,17 @@ class MatchPlayer(models.Model):
     assists = models.IntegerField()
 
     #Player items
-    item_0 = models.ForeignKey(Item, on_delete=models.PROTECT,verbose_name='item_0')
-    item_1 = models.ForeignKey(Item, on_delete=models.PROTECT,verbose_name='item_1')
-    item_2 = models.ForeignKey(Item, on_delete=models.PROTECT,verbose_name='item_2')
-    item_3 = models.ForeignKey(Item, on_delete=models.PROTECT,verbose_name='item_3')
-    item_4 = models.ForeignKey(Item, on_delete=models.PROTECT,verbose_name='item_4')
-    item_5 = models.ForeignKey(Item, on_delete=models.PROTECT,verbose_name='item_5')
-    backpack_0 = models.ForeignKey(Item, on_delete=models.PROTECT,verbose_name='backpack_0')
-    backpack_1 = models.ForeignKey(Item, on_delete=models.PROTECT,verbose_name='backpack_1')
-    backpack_2 = models.ForeignKey(Item, on_delete=models.PROTECT,verbose_name='backpack_2')
-    item_neutral = models.ForeignKey(Item, on_delete=models.PROTECT,verbose_name='item_neutral')
-    item_neutral2 = models.ForeignKey(Item, on_delete=models.PROTECT,verbose_name='item_neutral2')
+    item_0 = models.ForeignKey(Item, on_delete=models.PROTECT, related_name='matchplayer_item_0',verbose_name='item_0')
+    item_1 = models.ForeignKey(Item, on_delete=models.PROTECT, related_name='matchplayer_item_1',verbose_name='item_1')
+    item_2 = models.ForeignKey(Item, on_delete=models.PROTECT, related_name='matchplayer_item_2',verbose_name='item_2')
+    item_3 = models.ForeignKey(Item, on_delete=models.PROTECT, related_name='matchplayer_item_3',verbose_name='item_3')
+    item_4 = models.ForeignKey(Item, on_delete=models.PROTECT, related_name='matchplayer_item_4',verbose_name='item_4')
+    item_5 = models.ForeignKey(Item, on_delete=models.PROTECT, related_name='matchplayer_item_5',verbose_name='item_5')
+    backpack_0 = models.ForeignKey(Item, on_delete=models.PROTECT, related_name='matchplayer_backpack_0',verbose_name='backpack_0')
+    backpack_1 = models.ForeignKey(Item, on_delete=models.PROTECT, related_name='matchplayer_backpack_1',verbose_name='backpack_1')
+    backpack_2 = models.ForeignKey(Item, on_delete=models.PROTECT, related_name='matchplayer_backpack_2',verbose_name='backpack_2')
+    item_neutral = models.ForeignKey(Item, on_delete=models.PROTECT, related_name='matchplayer_item_neutral',verbose_name='item_neutral')
+    item_neutral2 = models.ForeignKey(Item, on_delete=models.PROTECT, related_name='matchplayer_item_neutral2',verbose_name='item_neutral2')
 
     def __str__(self):
         return self.name

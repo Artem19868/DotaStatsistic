@@ -1,6 +1,7 @@
-from models import Item
 import os
 import json
+
+from api.models import Item
 
 class ItemManager:
     def __init__(self, items_ids: list):

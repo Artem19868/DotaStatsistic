@@ -1,5 +1,5 @@
 from typing import List, Dict, Tuple
-from models import Ability
+from api.models import Ability
 import os
 import json
 

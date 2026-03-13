@@ -1,7 +1,8 @@
 import requests
-from models import Player, Match
-from items import ItemManager
-from heroes import HeroManager
+
+from api.models import Player, Match
+from api.items import ItemManager
+from api.heroes import HeroManager
 
 def get_api_request(url):
     response  = requests.get(url)
@@ -25,13 +26,14 @@ def get_player_data_api(account_id):
         rank_tier = 0
 
     player = Player(
-        account_id= account_id,
-        personaname= profile.get("personaname"),
+        steam_32_id= profile.get("account_id"),
+        user_name= profile.get("personaname"),
         avatar_url= profile.get("avatarfull"),
         rank_tier= rank_tier,
         wins= win_lose_data.get("win"),
         loses= win_lose_data.get("lose")
     )
+    print(type(player))
     return(player)
 
 def get_match_data_api(match_id):

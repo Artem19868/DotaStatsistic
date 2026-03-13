@@ -22,7 +22,7 @@ class Hero(BaseModel):
 
 class Player(BaseModel):
     steam_32_id: Optional[int] = None
-    user_name: str = "Anonymous"
+    user_name: Optional[str] = "Anonymous"
     avatar_url: Optional[str] = None
     win_rate: Optional[float] = None
     rank_tier: int

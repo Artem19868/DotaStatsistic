@@ -1,8 +1,9 @@
 from typing import List, Dict
-from models import Hero
 import os
 import json
-from abilities import AbilityManager
+
+from api.models import Hero
+from api.abilities import AbilityManager
 
 class HeroManager:
     def __init__(self, hero_id: int):

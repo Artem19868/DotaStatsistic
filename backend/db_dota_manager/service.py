@@ -1,4 +1,4 @@
-from models import Player, MatchPlayer, Item, Hero, HeroAbility
+from .models import Player, MatchPlayer, Item, Hero, HeroAbility
 from api import HeroManager, AbilityManager, ItemManager, get_player_data_api, get_match_data_api
 
 def model_to_tuple(obj):
@@ -14,19 +14,25 @@ class PlayerService:
     def __init__(self):
         pass
 
-    def create_player(self, account_id, player_data):
-        win_rate = round(player_data.wins / (player_data.wins + player_data.loses),2)
+    def create(self, account_id, player_data):
+        wins = player_data.wins
+        loses = player_data.loses
+        total = wins + loses
+        win_rate = 0.0
+        print(wins,loses)
+        if total > 0:
+            win_rate = round(wins / total, 2)
 
         player = Player.objects.create(steam_32_id = account_id,
-                                           user_name= player_data.personaname,
+                                           user_name= player_data.user_name,
                                            avatar_url= player_data.avatar_url,
                                            rank_tier= player_data.rank_tier,
-                                           win_rate=  0 if win_rate == 0 else win_rate)
+                                           win_rate=  win_rate)
                                                   
         player.save()
         return player
     
-    def update_player_data(self, account_id, player_data):
+    def update_data(self, account_id, player_data):
         player = Player.objects.get(steam_32_id = account_id)
 
         django_player = model_to_tuple(player)
@@ -42,16 +48,18 @@ class PlayerService:
         updated_player = Player.objects.get(steam_32_id = account_id)
         return updated_player
 
-    def get_player_data(self, account_id):
+    def get_data(self, account_id):
         player_data = get_player_data_api(account_id)
+        print(f'player_data: {player_data}')
 
-        is_player_exists = Player.objects.filter(steam_32_id = account_id)
+        is_player_exists = Player.objects.filter(steam_32_id = account_id).exists()
+        print(is_player_exists)
 
         if is_player_exists:
             player = Player.objects.get(steam_32_id = account_id)
             return player
         else:
-            player = self.create_player(account_id, player_data)
+            player = self.create(account_id, player_data)
             return player
 
 
@@ -59,7 +67,7 @@ class HeroService:
     def __init__(self):
         pass
 
-    def create_hero(self, hero_id, hero_data):
+    def create(self, hero_id, hero_data):
         hero = Hero.objects.create(hero_id=hero_id,
                                    name = hero_data.name,
                                    display_name = hero_data.display_name)
@@ -68,7 +76,7 @@ class HeroService:
         return hero
     
 
-    def get_hero_data(self, hero_id):
+    def get_data(self, hero_id):
         hero_data = HeroManager(hero_id).get_hero_model()
 
         is_hero_exists = Hero.objects.filter(hero_id = hero_id).exists()
@@ -77,14 +85,14 @@ class HeroService:
             hero = Hero.objects.get(hero_id = hero_id)
             return hero
         else:
-            hero = self.create_hero(hero_id, hero_data)
+            hero = self.create(hero_id, hero_data)
             return hero
         
 class HeroAbilityService:
     def __init__(self):
         pass
 
-    def create_ability(self, hero_id, ability_id):
+    def create(self, hero_id, ability_id):
         hero = Hero.objects.get(hero_id=hero_id)
 
         abilities = AbilityManager(hero.name).get_abilities_models()
@@ -93,7 +101,7 @@ class HeroAbilityService:
         return ability
     
 
-    def get_ability_data(self, hero_id):
+    def get_data(self, hero_id):
         hero = Hero.objects.get(hero_id = hero_id)
         
         #Возвращает одну абилку а не все исправить 
@@ -104,14 +112,14 @@ class HeroAbilityService:
                 ability = HeroAbility.objects.get(ability_id = id)
                 return ability
             else:
-                ability = self.create_ability(hero_id, id)
+                ability = self.create(hero_id, id)
                 return ability
             
 class ItemService:
     def __init__(self):
         pass
 
-    def create_item(self, item_id, item_data):
+    def create(self, item_id, item_data):
         hero = Item.objects.create(item_id=item_id,
                                    price = item_data.price,
                                    image_url = item_data.image_url,
@@ -121,7 +129,7 @@ class ItemService:
         return hero
     
 
-    def get_item_data(self, item_id):
+    def get_data(self, item_id):
         item_data = ItemManager([item_id]).get_item_model(item_id)
 
         is_item_exists = Item.objects.filter(item_id = item_id).exists()
@@ -130,5 +138,5 @@ class ItemService:
             item = Item.objects.get(item_id = item_id)
             return item
         else:
-            item = self.create_item(item_id, item_data)
+            item = self.create(item_id, item_data)
             return item

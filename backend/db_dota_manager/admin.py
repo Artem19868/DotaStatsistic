@@ -10,13 +10,13 @@ class PlayerAdmin(admin.ModelAdmin):
 
 class MatchPlayerAdmin(admin.ModelAdmin):
     list_display = ('player', 'hero', 'match__match_id')
-    search_fields = ('match__match_id')
+    search_fields = ('match__match_id',)
     list_per_page = 20
     list_max_show_all = 100
 
 class MatchAdmin(admin.ModelAdmin):
     list_display = ('match_id', 'radiant_win', 'radiant_score', 'dire_score', 'duration')
-    search_fields = ('match_id')
+    search_fields = ('match_id',)
     list_per_page = 20
     list_max_show_all = 100
 
@@ -33,8 +33,8 @@ class HeroAbilityAdmin(admin.ModelAdmin):
     list_max_show_all = 100
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('item_id','name')
-    search_fields = ('item_id', 'name')
+    list_display = ('item_id','display_name')
+    search_fields = ('item_id', 'display_name')
     list_per_page = 20
     list_max_show_all = 100
 
