@@ -33,8 +33,7 @@ def get_player_data_api(account_id):
         wins= win_lose_data.get("win"),
         loses= win_lose_data.get("lose")
     )
-    print(type(player))
-    return(player)
+    return player
 
 def get_match_data_api(match_id):
     url = f"https://api.opendota.com/api/matches/{match_id}"
@@ -44,7 +43,6 @@ def get_match_data_api(match_id):
     players = match_data.get("players")
 
     players_data = []
-
     for player in players:
         items_ids = [player["item_0"],
                      player["item_1"],
@@ -64,8 +62,8 @@ def get_match_data_api(match_id):
         player_items = [item_manager.get_item_model(id) for id in item_manager.items_ids]
 
         player_model = Player(
-            account_id = player["account_id"] if player.get("account_id") is not None else None,
-            personaname = player["personaname"] if player.get("personaname") is not None else "Anonymous",
+            steam_32_id = player["account_id"] if player.get("account_id") is not None else None,
+            user_name = player["personaname"] if player.get("personaname") is not None else "Anonymous",
             rank_tier= player["rank_tier"] if player.get("rank_tier") is not None else 0,
             avatar_url= player.get("avatar_url"),
             hero = hero_manager.get_hero_model(),
