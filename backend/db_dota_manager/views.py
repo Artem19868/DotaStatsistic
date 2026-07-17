@@ -73,14 +73,33 @@ class RedisCache:
             entity_data_serialize = None
                     
             if model_query_set.exists():
-                entity_data_serialize = serializers.serialize("json", [model_obj])
+                if self.entity_type == 'match':
+                    match_player_service = MatchPlayerService()
+                    players_data = match_player_service.get_all(self.entity_id)
+                    
+                    full_data = [model_obj] + list(players_data)
+                                        
+                    entity_data_serialize = serializers.serialize("json", full_data)
+                else:
+                    entity_data_serialize = serializers.serialize("json", [model_obj])
             else:
                 #improve this code!
-                if self.entity_type == 'player' or self.entity_type == 'match':
+                
+                if self.entity_type == 'player':
                     # data is Django model
                     data = service.get_or_create(self.entity_id)
                     
                     entity_data_serialize = serializers.serialize("json", [data])
+                elif self.entity_type == 'match':
+                    # data is Django model
+                    data = service.get_or_create(self.entity_id)
+                    
+                    match_player_service = MatchPlayerService()
+                    players_data = match_player_service.get_all(self.entity_id)
+                    
+                    full_data = [data] + list(players_data)           
+                                        
+                    entity_data_serialize = serializers.serialize("json", full_data)
                 else:
                     obj = service.get_or_create(self.entity_id)
                     entity_data_serialize = serializers.serialize("json", [obj])
@@ -125,13 +144,9 @@ def get_player_data(request, steam_32_id):
     return JsonResponse(return_data, safe=False)
 
 def get_match_data(request,match_id):
-    match_player_service = MatchPlayerService()
-    players_data = match_player_service.get_all(match_id)
-    serialized_data = serializers.serialize('json', players_data)
-    
     data = RedisCache('match', match_id).get_cache_data()
     json_string = data
-    return_data = json.loads(json_string) + json.loads(serialized_data)
+    return_data = json.loads(json_string)
     return JsonResponse(return_data, safe=False)
 
 def get_hero_data(request, hero_id):

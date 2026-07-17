@@ -61,7 +61,7 @@ class PlayerService:
             player = self.get(account_id)
             return player
         else:
-            player = self.create(account_id, player_data)
+            player = self._create(account_id, player_data)
             return player
 
 class HeroService:
@@ -90,7 +90,7 @@ class HeroService:
             hero = self.get(hero_id)
             return hero
         else:
-            hero = self.create(hero_id, hero_data)
+            hero = self._create(hero_id, hero_data)
             return hero
                 
 class HeroAbilityService:
@@ -126,7 +126,7 @@ class HeroAbilityService:
                 ability = self.get(id)
                 abilities.append(ability)
             else:
-                ability = self.create(hero_id, id)
+                ability = self._create(hero_id, id)
                 abilities.append(ability)
             
         #return all hero abilities
@@ -158,7 +158,7 @@ class ItemService:
             item = self.get(item_id)
             return item
         else:
-            item = self.create(item_id, item_data)
+            item = self._create(item_id, item_data)
             return item
         
     def ensure_items_exist(self, player_dict):
@@ -253,7 +253,7 @@ class MatchPlayerService:
     def create_all(self, players_data, match_id):
         match = Match.objects.get(match_id = match_id)
         for player_data in players_data:
-            self.create(player_data, match)            
+            self._create(player_data, match)            
         
 class MatchService:
     def __init__(self):
@@ -291,5 +291,5 @@ class MatchService:
             match = self.get(match_id)
             return match
         else:
-            match = self.create(match_id, match_data)
+            match = self._create(match_id, match_data)
             return match
