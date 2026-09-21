@@ -1,0 +1,94 @@
+#aside{
+    width: 15vw;
+    height: 100vh;
+    background-color: #070716;
+}
+
+#layout{
+    display: flex;
+    height: 100vh;
+}
+
+#aside .container{
+    display: flex;
+
+}
+
+.icon{
+    background-color: transparent;
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+}
+
+#aside .container div{
+    padding: 8px 8px 8px 4px;
+}
+
+#aside .container div p{
+    color: #656575;
+    font-size: 14px;
+}
+
+.nav-link{
+    font-size: 20px;
+    text-decoration: none;
+    width: 100%;
+    height: 100%;
+    
+}
+
+#side-bar{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.active-link{
+    color: white;
+}
+
+.link-container:has(.active-link){
+    background-color: #1C083F;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.link-container:has(.active-link)::before{
+    content: "";
+    position: absolute;
+    left: -8px;
+    overflow: hidden;
+    display: inline-block;
+    width: 8px;
+    height: 40px;
+    box-shadow: 
+    0 0 10px 2px #782f97,
+    0 0 15px 2px #782f97,
+    0 0 20px 2px #782f97;
+}
+
+.link-container:has(.active-link)::after{
+    content: "";
+    position: absolute;
+    right: -8px;
+    overflow: hidden;
+    display: inline-block;
+    width: 8px;
+    height: 40px;
+    box-shadow: 
+    0 0 10px 2px #782f97,
+    0 0 15px 2px #782f97,
+    0 0 20px 2px #782f97;
+}
+
+.link-container{
+    margin-top: 8px;
+    text-align: center;
+    height: 40px;
+    width: 180px;
+    line-height: 40px;
+}
