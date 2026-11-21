@@ -2,9 +2,8 @@ import React from "react";
 import Header from "../src/components/header";
 import Aside from "../src/components/aside";
 
-class Home extends React.Component {
-    render() {
-        return (
+function Home(){
+    return (
             <>
                 <div id="layout">
                     <Aside />
@@ -23,7 +22,6 @@ class Home extends React.Component {
 
             </>
         )
-    }
 }
 
 export default Home

@@ -1,9 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-class Aside extends React.Component {
-    render() {
-        return (<aside id="aside">
+function Aside(){
+    return (<aside id="aside">
             <div className="container">
                 <img src="/dota-icon.svg" alt="Dota 2 icon" className="icon"/>
 
@@ -62,7 +61,6 @@ class Aside extends React.Component {
                 </li> */}
             </ul>
         </aside>)
-    }
 }
 
 export default Aside

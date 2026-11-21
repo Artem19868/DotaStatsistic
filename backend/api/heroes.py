@@ -22,7 +22,7 @@ class HeroManager:
         self.heroes_by_id = { hero["id"]:hero for hero in self.heroes_data}
         
     def _load_hero_photo(self, hero_name):
-        image_url = f"https://cdn.dota2.com/apps/dota2/images/heroes/{hero_name.replace('npc_dota_hero_', '')}_full.png"
+        image_url = f"https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/{hero_name.replace('npc_dota_hero_', '')}.png"
         return image_url
 
     def get_hero_model(self):

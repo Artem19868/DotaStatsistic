@@ -2,9 +2,8 @@ import React from "react";
 import Header from "../src/components/header";
 import Aside from "../src/components/aside";
 
-class Items extends React.Component {
-    render() {
-        return (
+function Items(){
+    return (
             <>
                 <div id="layout">
                     <Aside />
@@ -23,7 +22,6 @@ class Items extends React.Component {
 
             </>
         )
-    }
 }
 
 export default Items
